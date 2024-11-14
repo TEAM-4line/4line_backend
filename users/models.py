@@ -14,6 +14,13 @@ class UserManager(BaseUserManager):
     def create_superuser(self, email, password=None, **extra_fields):
         extra_fields.setdefault('is_staff', True)
         extra_fields.setdefault('is_superuser', True)
+
+        #추후에 삭제
+        if extra_fields.get('is_staff') is not True:
+            raise ValueError('Superuser must have is_staff=True.')
+        if extra_fields.get('is_superuser') is not True:
+            raise ValueError('Superuser must have is_superuser=True.')
+        #여기까지
         return self.create_user(email, password, **extra_fields)
 
 class User(AbstractBaseUser):
@@ -31,6 +38,9 @@ class User(AbstractBaseUser):
     ], null=True, blank=True)
     profile_image = models.CharField(max_length=255, blank=True, null=True)  # 프로필 이미지 필드 추가
 
+    is_staff = models.BooleanField(default=False)  # 추후에 삭제
+    is_superuser = models.BooleanField(default=False) #추후에 삭제
+
     objects = UserManager()
 
     USERNAME_FIELD = 'email'
@@ -38,6 +48,12 @@ class User(AbstractBaseUser):
 
     def __str__(self):
         return self.email
+    
+    def has_perm(self, perm, obj=None):
+        return self.is_superuser
+
+    def has_module_perms(self, app_label):
+        return self.is_superuser
     
 class Bookmarked(models.Model):
     user = models.ForeignKey(User, related_name="bookmarked", on_delete=models.CASCADE)

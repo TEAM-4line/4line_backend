@@ -1,9 +1,9 @@
 from django.db import models
 from django.contrib.auth.models import User
-
+from django.conf import settings
 class Test(models.Model):
     id = models.AutoField(primary_key=True)
-    writer = models.ForeignKey(User, on_delete=models.CASCADE)
+    writer = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
     # Travel Style
     TRAVEL_STYLE_CHOICES = [
@@ -81,8 +81,3 @@ class Test(models.Model):
         ('detailed_plan', '휴가를 망칠 수 없지!\n엑셀에 분 단위로 계획 세움')
     ]
     trip_planning_style = models.CharField(max_length=20, choices=PLANNING_STYLE_CHOICES)
-
-class Totaltest(models.Model):
-    id = models.AutoField(primary_key=True)
-    writer = models.ForeignKey(User, on_delete=models.CASCADE)
-    test = models.ForeignKey(Test, on_delete=models.CASCADE) 

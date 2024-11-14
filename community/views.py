@@ -8,6 +8,9 @@ class CommunityViewSet(viewsets.ModelViewSet):
     queryset = Community.objects.all()
     serializer_class = CommunitySerializer
 
+    def perform_create(self, serializer):
+        serializer.save(writer=self.request.user)
+
     @action(detail=True, methods=['post'])
     def like(self, request, pk=None):
         community = self.get_object()
