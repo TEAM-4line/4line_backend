@@ -9,8 +9,8 @@ class CommunitySerializer(serializers.ModelSerializer):
         model = Community
         fields = '__all__'
 
-    writer = serializers.SerializerMethodField()
-    def get_writer(self, obj):
+    name = serializers.SerializerMethodField()
+    def get_name(self, obj):
         # writer 필드에서 사용자 이름을 가져옴
         return obj.writer.name if obj.writer.name else obj.writer.email
 
