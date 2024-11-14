@@ -1,7 +1,9 @@
 from rest_framework.serializers import ModelSerializer
 from .models import User, Bookmarked, PreviousTrips
+from rest_framework import serializers
 
 class UserSerializer(ModelSerializer):
+    trip_type = serializers.CharField(read_only=True)
     class Meta:
         model = User
         fields = ['id', 'name', 'birth', 'email', 'password', 'intro', 'trip_type', 'profile_image']  # 필드 명 수정 및 추가

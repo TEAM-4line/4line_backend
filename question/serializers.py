@@ -1,11 +1,12 @@
 from rest_framework import serializers
 from .models import *
+from users.models import User
 
 
 class TestListSerializer(serializers.ModelSerializer):
 
-    writer = serializers.SerializerMethodField()
-    def get_writer(self, obj):
+    name = serializers.SerializerMethodField()
+    def get_name(self, obj):
         # writer 필드에서 사용자 이름을 가져옴
         return obj.writer.name if obj.writer.name else obj.writer.email
     
@@ -21,19 +22,15 @@ class TestListSerializer(serializers.ModelSerializer):
 class TestSerializer(serializers.ModelSerializer):
     trip_type = serializers.SerializerMethodField()  # type 필드 추가
 
-    writer = serializers.SerializerMethodField()
-    def get_writer(self, obj):
+    name = serializers.SerializerMethodField()
+
+    def get_name(self, obj):
         # writer 필드에서 사용자 이름을 가져옴
         return obj.writer.name if obj.writer.name else obj.writer.email
     
-    def create(self, validated_data):
-        # writer 필드를 요청한 사용자로 설정
-        validated_data['writer'] = self.context['request'].user
-        return super().create(validated_data)
-    
     class Meta:
         model = Test
-        fields = ['id', 'trip_type', 'writer']
+        fields = ['id', 'trip_type', 'name']
 
     def get_trip_type(self, instance):
         # 각 타입별 초기 점수
@@ -129,5 +126,16 @@ class TestSerializer(serializers.ModelSerializer):
         }
         top_animal = max(animal_scores, key=animal_scores.get)
         return top_animal
+    
+    def create(self, validated_data):
+        # writer 필드를 요청한 사용자로 설정
+        validated_data['writer'] = self.context['request'].user
+        instance = super().create(validated_data)
 
+        # trip_type을 계산하여 User 모델에 저장
+        trip_type = self.get_trip_type(instance)
+        user = self.context['request'].user
+        user.trip_type = trip_type
+        user.save()
 
+        return instance
