@@ -110,6 +110,7 @@ class LoginView(APIView):
         if user is not None:
             return Response({
                 "id": user.id,
+                "name": user.name,
                 "trip_type": user.trip_type,
                 "message": "로그인 성공"
             }, status=status.HTTP_200_OK)
