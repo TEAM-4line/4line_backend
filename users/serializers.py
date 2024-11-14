@@ -4,7 +4,7 @@ from .models import User, Bookmarked, PreviousTrips
 class UserSerializer(ModelSerializer):
     class Meta:
         model = User
-        fields = ['name', 'birth', 'email', 'password', 'intro', 'trip_type', 'profile_image']  # 필드 명 수정 및 추가
+        fields = ['id', 'name', 'birth', 'email', 'password', 'intro', 'trip_type', 'profile_image']  # 필드 명 수정 및 추가
         extra_kwargs = {'password': {'write_only': True}}  # 비밀번호는 쓰기 전용으로 설정
 
     # 회원가입
@@ -40,4 +40,4 @@ class UserProfileSerializer(ModelSerializer):
 
     class Meta:
         model = User
-        fields = ['name', 'email', 'intro', 'trip_type', 'profile_image', 'bookmarked', 'previous_trips']
+        fields = ['id', 'name', 'email', 'intro', 'trip_type', 'profile_image', 'bookmarked', 'previous_trips']
