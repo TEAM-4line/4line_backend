@@ -96,7 +96,7 @@ class SignUpView(APIView):
             user.set_password(password)  # 비밀번호 암호화 저장
             user.save()
 
-            return Response({"message": "회원가입에 성공하였습니다."}, status=status.HTTP_201_CREATED)
+            return Response({"id": user.id, "message": "회원가입에 성공하였습니다."}, status=status.HTTP_201_CREATED)
         else:
             return Response({"message": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
         
@@ -108,7 +108,7 @@ class LoginView(APIView):
         user = authenticate(request, email=email, password=password)
 
         if user is not None:
-            return Response({"message": "로그인 성공"}, status=status.HTTP_200_OK)
+            return Response({"id": user.id, "message": "로그인 성공"}, status=status.HTTP_200_OK)
         return Response({"message": "로그인 실패"}, status=status.HTTP_400_BAD_REQUEST)
     
 # 탈퇴 뷰
