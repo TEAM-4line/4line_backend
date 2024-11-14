@@ -1,10 +1,11 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.conf import settings
+from users.models import User
 class Test(models.Model):
     id = models.AutoField(primary_key=True)
-    writer = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-
+    name = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    trip_type = models.CharField(max_length=20,blank=True, null=True)
     # Travel Style
     TRAVEL_STYLE_CHOICES = [
         ('early_bird', '아침 일찍 일출 보고\n조식까지 야무지게 먹어줌'),

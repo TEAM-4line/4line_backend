@@ -1,5 +1,6 @@
 from rest_framework import viewsets, status
 from rest_framework.response import Response
+from rest_framework.decorators import action
 from .models import *
 from .serializers import *
 '''
@@ -15,7 +16,8 @@ class TestViewSet(viewsets.ModelViewSet):
     queryset = Test.objects.all()
 
     def get_serializer_class(self):
-        if self.action == 'retrieve':  # 상세 조회 시
+        if self.action == 'list':
+            return TestListSerializer
+        elif self.action == 'retrieve':
             return TestSerializer
         return TestListSerializer
-
