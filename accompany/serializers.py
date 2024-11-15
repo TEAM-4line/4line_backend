@@ -3,7 +3,8 @@ from .models import Accompany,Comment
 
 class AccompanySerializer(serializers.ModelSerializer):
     id = serializers.CharField(read_only=True)
-    user_name = serializers.CharField(source='user.name', read_only=True) 
+    user_name = serializers.CharField(source='user.name', read_only=True)
+    profile_image = serializers.CharField(source='user.profile_image', read_only=True)  # profile_image 추가
     created_at = serializers.DateTimeField(format="%Y-%m-%d %H:%M", read_only=True)  # 포맷팅 추가
     updated_at = serializers.DateTimeField(format="%Y-%m-%d %H:%M", read_only=True)  # 포맷팅 추가
     comments = serializers.SerializerMethodField(read_only=True)
@@ -25,6 +26,7 @@ class AccompanySerializer(serializers.ModelSerializer):
 class AccompanyListSerializer(serializers.ModelSerializer):
     comments_cnt = serializers.SerializerMethodField()
     user_name = serializers.CharField(source='user.name', read_only=True) 
+    profile_image = serializers.CharField(source='user.profile_image', read_only=True)  # profile_image 추가
     created_at = serializers.DateTimeField(format="%Y-%m-%d %H:%M", read_only=True)  # 포맷팅 추가
 
     def get_comments_cnt(self, instance):
@@ -36,6 +38,7 @@ class AccompanyListSerializer(serializers.ModelSerializer):
             "id",
             "user",
             "user_name",
+            "profile_image",
             "age",
             "travel_area",
             "travel_period",
