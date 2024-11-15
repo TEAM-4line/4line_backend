@@ -3,20 +3,15 @@ from rest_framework.response import Response
 from rest_framework.decorators import action
 from .models import *
 from .serializers import *
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import IsAuthenticated
 '''
-class TestViewSet(viewsets.ModelViewSet):
-    queryset = Totaltest.objects.all()
-    serializer_class = TestSerializer # 인증된 사용자만 접근 가능하도록 설정
 
-    def perform_create(self, serializer):
-        # 요청한 사용자를 writer로 설정하고 인스턴스 생성
-        serializer.save(writer=self.request.user)
 '''
 class TestViewSet(viewsets.ModelViewSet):
     
     queryset = Test.objects.all()
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
+    
     def get_serializer_class(self):
         if self.action == 'list':
             return TestListSerializer
