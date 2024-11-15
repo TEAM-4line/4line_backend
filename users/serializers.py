@@ -1,6 +1,21 @@
 from rest_framework.serializers import ModelSerializer
 from .models import User, Bookmarked, PreviousTrips
 from rest_framework import serializers
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+
+class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
+
+    def validate(self, attrs):
+        data = super().validate(attrs)
+
+        # 사용자 정보 추가하여 응답 확장
+        data.update({
+            'id': self.user.id,
+            'name': self.user.name,
+            'trip_type': self.user.trip_type
+        })
+
+        return data
 
 class UserSerializer(ModelSerializer):
     trip_type = serializers.CharField(read_only=True)

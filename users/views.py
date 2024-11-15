@@ -8,7 +8,11 @@ from django.shortcuts import get_object_or_404
 from django.core.exceptions import ValidationError
 from django.contrib.auth.password_validation import validate_password
 import random
+from rest_framework_simplejwt.views import TokenObtainPairView
+from .serializers import CustomTokenObtainPairSerializer
 
+class CustomTokenObtainPairView(TokenObtainPairView):
+    serializer_class = CustomTokenObtainPairSerializer
 # class SignUpView(APIView):
 #     def post(self, request):
 #         name = request.data.get('name')

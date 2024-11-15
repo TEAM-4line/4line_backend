@@ -29,8 +29,6 @@ urlpatterns = [
     path('api/community/', include('community.urls')),
     path('api/question/', include('question.urls')),
     path('api/users/', include('users.urls')),
-    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),  # 액세스 및 리프레시 토큰 발급
-    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),  # 리프레시 토큰으로 액세스 토큰 갱신
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
