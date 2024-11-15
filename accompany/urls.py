@@ -1,6 +1,6 @@
 from django.urls import path, include
 from rest_framework import routers
-from .views import AccompanyViewSet, AccompanyCommentViewSet, CommentViewSet
+from .views import AccompanyViewSet, AccompanyCommentViewSet, CommentViewSet, AccompanyByTypeView
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -12,7 +12,8 @@ default_router.register("", AccompanyViewSet, basename="accompanies")
 
 urlpatterns = [
     # 여행 타입별 게시물 조회
-    path("<str:trip_type>/", AccompanyViewSet.as_view({'get': 'list'}), name="accompany_by_type"),
+    #path("<str:trip_type>/", AccompanyViewSet.as_view({'get': 'list'}), name="accompany_by_type"),
+    path("<str:trip_type>/", AccompanyByTypeView.as_view(), name="accompany_by_type"),
 
     # Base AccompanyViewSet URLs
     path("", include(default_router.urls)),

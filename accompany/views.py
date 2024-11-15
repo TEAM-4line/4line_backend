@@ -10,6 +10,7 @@ from rest_framework import status
 
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
+from rest_framework.views import APIView
 
 from .models import Accompany
 from .serializers import AccompanySerializer
@@ -55,6 +56,17 @@ class AccompanyViewSet(viewsets.ModelViewSet):
         serializer.is_valid(raise_exception=True)
         instance = serializer.save()
         return Response(self.get_serializer(instance).data, status=status.HTTP_201_CREATED)
+    
+class AccompanyByTypeView(APIView):
+    """
+    여행 타입별 게시물 조회
+    """
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, trip_type):
+        queryset = Accompany.objects.filter(trip_type=trip_type)
+        serializer = AccompanyListSerializer(queryset, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
     
     # 유효성 검사
         if not serializer.is_valid():
