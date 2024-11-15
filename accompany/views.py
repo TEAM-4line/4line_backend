@@ -29,7 +29,7 @@ class AccompanyViewSet(viewsets.ModelViewSet):
     
     def get_permissions(self):
         if self.action in ["update", "destroy", "partial_update"]:
-            return [IsAdminUser()]
+            return [IsOwnerOrReadOnly()]
         return []
 
     def create(self, request):
@@ -66,7 +66,6 @@ class CommentViewSet(viewsets.GenericViewSet, mixins.RetrieveModelMixin, mixins.
 class AccompanyCommentViewSet(viewsets.GenericViewSet, mixins.ListModelMixin, mixins.CreateModelMixin):
     # queryset = Comment.objects.all()
     serializer_class = CommentSerializer
-    permission_classes = [IsAuthenticated]
     def get_queryset(self):
         accompany = self.kwargs.get("accompany_id")
         queryset = Comment.objects.filter(accompany_id=accompany)
@@ -82,7 +81,7 @@ class AccompanyCommentViewSet(viewsets.GenericViewSet, mixins.ListModelMixin, mi
         accompany= get_object_or_404(Accompany, id=accompany_id)
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        serializer.save(accompany=accompany)
+        serializer.save(accompany=accompany, user=request.user)
         return Response(serializer.data)
     
 
