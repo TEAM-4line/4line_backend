@@ -5,10 +5,10 @@ from users.models import User
 from community.models import Community
 from .serializers import MainUserSerializer, PopularCommunitySerializer
 from django.db.models import Count
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import AllowAny
 
 class MainPageView(APIView):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
     def get(self, request):
         # 1. 사용자 정보 가져오기
         user = request.user
