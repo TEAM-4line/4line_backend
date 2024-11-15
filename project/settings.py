@@ -43,14 +43,11 @@ INSTALLED_APPS = [
     'main',
     'rest_framework',
     'community',
-<<<<<<< HEAD
     'accompany',
-    'django_filters'
-=======
+    'django_filters',
     'question',
     'users',
     'corsheaders',
->>>>>>> 682e42a6e3a9b077445cf0ce5d040ec73a5b1204
 ]
 
 MIDDLEWARE = [

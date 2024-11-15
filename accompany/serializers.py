@@ -20,6 +20,7 @@ class AccompanySerializer(serializers.ModelSerializer):
             "created_at",
             "updated_at",
             "comments"
+            "trip_type"
         ]
 class AccompanyListSerializer(serializers.ModelSerializer):
     comments_cnt = serializers.SerializerMethodField()
@@ -37,9 +38,10 @@ class AccompanyListSerializer(serializers.ModelSerializer):
             "travel_period",
             "description",
             "comments_cnt",
-            "created_at"
+            "created_at",
+            "trip_type"
         ]
-        read_only_fields = ["id", "created_at", "updated_at", "comments_cnt"]
+        read_only_fields = ["trip_type", "id", "created_at", "updated_at", "comments_cnt"]
 
 
 class CommentSerializer(serializers.ModelSerializer):

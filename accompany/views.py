@@ -33,15 +33,24 @@ class AccompanyViewSet(viewsets.ModelViewSet):
         return []
 
     def create(self, request):
-        serializer = self.get_serializer(data=request.data)
+    # 현재 로그인한 유저 정보에서 trip_type 가져오기
+        user = request.user
+        trip_type = user.trip_type  # 유저의 trip_type 가져오기
+
+    # 요청 데이터를 복사하여 trip_type 추가
+        data = request.data.copy()
+        data['trip_type'] = trip_type
+
+    # Serializer에 수정된 데이터를 전달
+        serializer = self.get_serializer(data=data)
         serializer.is_valid(raise_exception=True)
         self.perform_create(serializer)
 
-        accompany = serializer.instance
+        accompany = serializer.instance  # 생성된 Accompany 인스턴스
         return Response(serializer.data)
     
     def perform_update(self, serializer):
-        accompany=serializer.save()
+            accompany=serializer.save()
         
 
         
