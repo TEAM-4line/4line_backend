@@ -3,9 +3,9 @@ from .models import Accompany,Comment
 
 class AccompanySerializer(serializers.ModelSerializer):
     id = serializers.CharField(read_only=True)
-    created_at = serializers.CharField(read_only=True)
-    updated_at = serializers.CharField(read_only=True)
-
+    user_name = serializers.CharField(source='user.name', read_only=True) 
+    created_at = serializers.DateTimeField(format="%Y-%m-%d %H:%M", read_only=True)  # 포맷팅 추가
+    updated_at = serializers.DateTimeField(format="%Y-%m-%d %H:%M", read_only=True)  # 포맷팅 추가
     comments = serializers.SerializerMethodField(read_only=True)
 
     def get_comments(self, instance):
@@ -24,6 +24,8 @@ class AccompanySerializer(serializers.ModelSerializer):
         ]
 class AccompanyListSerializer(serializers.ModelSerializer):
     comments_cnt = serializers.SerializerMethodField()
+    user_name = serializers.CharField(source='user.name', read_only=True) 
+    created_at = serializers.DateTimeField(format="%Y-%m-%d %H:%M", read_only=True)  # 포맷팅 추가
 
     def get_comments_cnt(self, instance):
         return instance.comments.count()
@@ -33,6 +35,7 @@ class AccompanyListSerializer(serializers.ModelSerializer):
         fields = [
             "id",
             "user",
+            "user_name",
             "age",
             "travel_area",
             "travel_period",
@@ -46,6 +49,7 @@ class AccompanyListSerializer(serializers.ModelSerializer):
 
 class CommentSerializer(serializers.ModelSerializer):
     anonymous_name = serializers.ReadOnlyField()  # 익명 이름은 읽기 전용 필드로 설정
+    created_at = serializers.DateTimeField(format="%Y-%m-%d %H:%M", read_only=True)  # 포맷팅 추가
     
     class Meta:
         model = Comment
