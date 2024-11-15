@@ -5,24 +5,21 @@ from users.models import User
 
 
 class TestListSerializer(serializers.ModelSerializer):
-
     name = serializers.SerializerMethodField()
+
     def get_name(self, obj):
-        # writer 필드에서 사용자 이름을 가져옴
         return obj.name.name
-    
+
     def create(self, validated_data):
-        # `name` 필드를 요청한 사용자로 설정
+        # 사용자 정보 추가
         user = self.context['request'].user
         if user.is_anonymous:
             raise serializers.ValidationError("인증된 사용자가 필요합니다.")
 
         validated_data['name'] = user
-
-        # 인스턴스를 먼저 생성
         instance = Test.objects.create(**validated_data)
 
-        # `trip_type` 계산 후 저장
+        # trip_type 계산
         trip_type = self.get_trip_type(instance)
         instance.trip_type = trip_type
         instance.save()
@@ -234,4 +231,9 @@ class TestSerializer(serializers.ModelSerializer):
         return top_animal
     class Meta:
         model = Test
-        fields = ['id', 'trip_type', 'name']
+        fields = [
+            'id', 'name', 'travel_style', 'transportation', 'cafe_wait_time',
+            'luggage_amount', 'route_preference', 'sea_discovery', 'dinner_choice',
+            'first_stop', 'budget_approach', 'trip_planning_style', 'trip_type'
+        ]
+        read_only_fields = ['trip_type']

@@ -13,44 +13,6 @@ from .serializers import CustomTokenObtainPairSerializer
 
 class CustomTokenObtainPairView(TokenObtainPairView):
     serializer_class = CustomTokenObtainPairSerializer
-# class SignUpView(APIView):
-#     def post(self, request):
-#         name = request.data.get('name')
-#         birth = request.data.get('birth')
-#         password = request.data.get('password')
-#         password2 = request.data.get('password2')
-#         email = request.data.get('email')
-#         intro = request.data.get('intro')
-
-#         # 비밀번호 일치 확인
-#         if password != password2:
-#             return Response({"message": "입력한 비밀번호가 다릅니다."}, status=status.HTTP_400_BAD_REQUEST)
-        
-#         # 비밀번호 유효성 검사
-#         try:
-#             validate_password(password)
-#         except ValidationError as e:
-#             return Response({"message": e.messages}, status=status.HTTP_400_BAD_REQUEST)
-
-#         # serializer로 유효성 검사 후 데이터 전달
-#         data = {
-#             "name": name,
-#             "birth": birth,
-#             "email": email,
-#             "password": password,
-#             "intro": intro
-#         }
-#         serializer = UserSerializer(data=data)
-        
-#         # 데이터 유효성 검사 및 저장
-#         if serializer.is_valid(raise_exception=True):
-#             user = serializer.save()
-#             user.set_password(password)  # 비밀번호 암호화 저장
-#             user.save()
-
-#             return Response({"message": "회원가입에 성공하였습니다."}, status=status.HTTP_201_CREATED)
-#         else:
-#             return Response({"message": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
          
 class SignUpView(APIView):
     def post(self, request):
@@ -112,6 +74,7 @@ class LoginView(APIView):
         user = authenticate(request, email=email, password=password)
 
         if user is not None:
+            trip_type = user.trip_type if user.trip_type else "default_trip_type"
             return Response({
                 "id": user.id,
                 "name": user.name,
