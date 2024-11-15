@@ -124,12 +124,12 @@ class TestListSerializer(serializers.ModelSerializer):
         top_animal = max(animal_scores, key=animal_scores.get)
         return top_animal
 
-        return instance
     class Meta:
         model = Test
         fields = ['id', 'name', 'travel_style', 'transportation', 'cafe_wait_time', 
                 'luggage_amount', 'route_preference', 'sea_discovery', 'dinner_choice', 
-                'first_stop', 'budget_approach', 'trip_planning_style']
+                'first_stop', 'budget_approach', 'trip_planning_style','trip_type']
+        read_only_fields = ['trip_type']
 
 class TestSerializer(serializers.ModelSerializer):
     trip_type = serializers.SerializerMethodField()  # type 필드 추가
