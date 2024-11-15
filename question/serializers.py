@@ -13,8 +13,12 @@ class TestListSerializer(serializers.ModelSerializer):
     
     def create(self, validated_data):
         # `name` 필드를 요청한 사용자로 설정
-        validated_data['name'] = self.context['request'].user
-        
+        user = self.context['request'].user
+        if user.is_anonymous:
+            raise serializers.ValidationError("인증된 사용자가 필요합니다.")
+
+        validated_data['name'] = user
+
         # 인스턴스를 먼저 생성
         instance = Test.objects.create(**validated_data)
 
