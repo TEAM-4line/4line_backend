@@ -3,11 +3,12 @@ from rest_framework.response import Response
 from rest_framework import viewsets, status
 from .models import Community
 from .serializers import CommunitySerializer
+from rest_framework.permissions import IsAuthenticated
 
 class CommunityViewSet(viewsets.ModelViewSet):
     queryset = Community.objects.all()
     serializer_class = CommunitySerializer
-
+    #permission_classes = [IsAuthenticated]
     def perform_create(self, serializer):
         serializer.save(writer=self.request.user)
 
