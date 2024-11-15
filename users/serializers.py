@@ -9,11 +9,13 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
     def validate(self, attrs):
         data = super().validate(attrs)
 
+        trip_type = self.user.trip_type if self.user.trip_type else "default_trip_type"
+
         # 사용자 정보 추가하여 응답 확장
         data.update({
             'id': self.user.id,
             'name': self.user.name,
-            'trip_type': self.user.trip_type
+            'trip_type': trip_type
         })
 
         return data
