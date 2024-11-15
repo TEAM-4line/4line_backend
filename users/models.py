@@ -35,7 +35,7 @@ class User(AbstractBaseUser):
         ('dolphin', '돌고래'),
         ('fox', '여우'),
         ('cat', '고양이')
-    ], null=True, blank=True, default='lion')
+    ], null=True, blank=True)
     profile_image = models.CharField(max_length=255, blank=True, null=True)  # 프로필 이미지 필드 추가
 
     is_staff = models.BooleanField(default=False)  # 추후에 삭제
