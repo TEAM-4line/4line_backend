@@ -6,6 +6,7 @@ from rest_framework import viewsets, mixins
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from .serializers import AccompanySerializer, CommentSerializer, AccompanyListSerializer
 # Create your views here.
+from rest_framework import status
 
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
@@ -17,21 +18,28 @@ from django.shortcuts import get_object_or_404
 
 class AccompanyViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
+    queryset = Accompany.objects.all()
+
     def get_queryset(self):
         trip_type = self.kwargs.get("trip_type")
         if trip_type:
             return Accompany.objects.filter(trip_type=trip_type)
-        return Accompany.objects.all()
+        return super().get_queryset()
     
     def get_serializer_class(self):
-        if self.action == "list":
+        if self.action == "list" or self.action == "retrieve":
             return AccompanyListSerializer
         return AccompanySerializer
     
-    def get_permissions(self):
-        if self.action in ["update", "destroy", "partial_update"]:
-            return [IsOwnerOrReadOnly()]
-        return []
+    def retrieve(self, request, *args, **kwargs):
+        instance = self.get_object()
+        serializer = self.get_serializer(instance)
+        return Response(serializer.data)
+    
+    # def get_permissions(self):
+    #     if self.action in ["update", "destroy", "partial_update"]:
+    #         return [IsOwnerOrReadOnly()]
+    #     return []
 
     def create(self, request):
     # 현재 로그인한 유저 정보에서 trip_type 가져오기
@@ -45,16 +53,27 @@ class AccompanyViewSet(viewsets.ModelViewSet):
         data['trip_type'] = trip_type
         data['user'] = user.id
 
-    # Serializer에 수정된 데이터를 전달
         serializer = self.get_serializer(data=data)
-        serializer.is_valid(raise_exception=True)
-        self.perform_create(serializer)
-
-        accompany = serializer.instance  # 생성된 Accompany 인스턴스
-        return Response(serializer.data)
     
-    def perform_update(self, serializer):
-            accompany=serializer.save()
+    # 유효성 검사
+        if not serializer.is_valid():
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)  # 오류 출력
+
+    # serializer.save()를 사용하여 인스턴스 저장
+        instance = serializer.save()
+        return Response(self.get_serializer(instance).data, status=status.HTTP_201_CREATED)
+
+    # Serializer에 수정된 데이터를 전달
+    #     serializer = self.get_serializer(data=data)
+    #     serializer.is_valid(raise_exception=True)
+    #     self.perform_create(serializer)
+
+    #     accompany = serializer.instance  # 생성된 Accompany 인스턴스
+    #     #return Response(serializer.data)
+    #     return Response(serializer.data, status=status.HTTP_201_CREATED)
+    
+    # def perform_update(self, serializer):
+    #         serializer.save()
         
 
         
