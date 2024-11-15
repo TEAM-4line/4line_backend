@@ -15,7 +15,20 @@ class AccompanySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Accompany
-        fields = '__all__'
+        fields = fields = [
+            "id",
+            "user_name",
+            "profile_image",
+            "created_at",
+            'updated_at',
+            "comments",
+            "trip_type",
+            "age",
+            "travel_area",
+            "travel_period",
+            "description",
+            "user"
+        ]
         read_only_fields = [
             "id",
             "created_at",

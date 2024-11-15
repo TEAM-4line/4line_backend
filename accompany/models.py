@@ -7,7 +7,7 @@ from django.conf import settings
 class Accompany(models.Model):
     id = models.AutoField(primary_key=True)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    trip_type = models.CharField(max_length=50, blank=True)
+    trip_type = models.CharField(max_length=50, blank=True, null=True)
     age = models.IntegerField()
     travel_area = models.CharField(max_length=100)
     travel_period = models.CharField(max_length=50)
