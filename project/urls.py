@@ -23,7 +23,12 @@ urlpatterns = [
     path('api/admin/', admin.site.urls),
     path('api/', include('main.urls')),
     path('api/community/', include('community.urls')),
+<<<<<<< HEAD
     path('api/accompany/', include('accompany.urls')),
+=======
+    path('api/question/', include('question.urls')),
+    path('api/users/', include('users.urls')),
+>>>>>>> 682e42a6e3a9b077445cf0ce5d040ec73a5b1204
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

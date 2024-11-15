@@ -17,7 +17,7 @@ import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-env = environ.Env(DEBUG=(bool, False))
+env = environ.Env(DEBUG=(bool, True))
 environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
@@ -43,11 +43,18 @@ INSTALLED_APPS = [
     'main',
     'rest_framework',
     'community',
+<<<<<<< HEAD
     'accompany',
     'django_filters'
+=======
+    'question',
+    'users',
+    'corsheaders',
+>>>>>>> 682e42a6e3a9b077445cf0ce5d040ec73a5b1204
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',  # 최상단으로 이동하여 모든 요청에 대해 CORS 미들웨어가 먼저 작동하도록 설정
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -133,3 +140,12 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+AUTH_USER_MODEL = 'users.User'
+
+# CORS settings
+CORS_ALLOW_ALL_ORIGINS = False  # 모든 도메인을 허용하지 않도록 설정
+CORS_ORIGIN_WHITELIST = ('http://127.0.0.1:3000', 'http://localhost:3000')  # 허용할 프론트엔드 도메인 추가
+CORS_ALLOW_CREDENTIALS = True  # 쿠키와 인증 정보를 포함한 요청을 허용
+
+# CSRF trusted origins
+CSRF_TRUSTED_ORIGINS = ['http://127.0.0.1:3000', 'http://localhost:3000']  # CSRF 검증을 신뢰하는 도메인 추가
