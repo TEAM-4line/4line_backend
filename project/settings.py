@@ -44,6 +44,8 @@ INSTALLED_APPS = [
     'main',
     'rest_framework',
     'community',
+    'accompany',
+    'django_filters',
     'question',
     'users',
     'corsheaders',
