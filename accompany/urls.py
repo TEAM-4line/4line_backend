@@ -11,11 +11,11 @@ default_router = routers.SimpleRouter(trailing_slash=True)
 default_router.register("", AccompanyViewSet, basename="accompanies")
 
 urlpatterns = [
-    # Base AccompanyViewSet URLs
-    path("", include(default_router.urls)),
-
     # Accompany filtering by trip_type with trailing slash
     path("<str:trip_type>/", AccompanyViewSet.as_view({'get': 'list'}), name="accompany_by_type"),
+    
+    # Base AccompanyViewSet URLs
+    path("", include(default_router.urls)),
 
     # Nested comments for a specific Accompany with trailing slash
     path(
