@@ -2,6 +2,7 @@ from rest_framework.serializers import ModelSerializer
 from .models import User, Bookmarked, PreviousTrips
 from rest_framework import serializers
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+from django.conf import settings
 
 class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
 
@@ -55,6 +56,13 @@ class UserProfileSerializer(ModelSerializer):
     bookmarked = BookmarkedSerializer(many=True, read_only=True)
     previous_trips = PreviousTripsSerializer(many=True, read_only=True)
 
+    profile_image = serializers.SerializerMethodField()
+
     class Meta:
         model = User
         fields = ['id', 'name', 'email', 'intro', 'trip_type', 'profile_image', 'bookmarked', 'previous_trips']
+
+    def get_profile_image(self, obj):
+        if obj.profile_image:
+            return f"{settings.MEDIA_URL}{obj.profile_image}"
+        return None
