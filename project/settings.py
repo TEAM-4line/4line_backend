@@ -49,6 +49,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',  # 최상단으로 이동하여 모든 요청에 대해 CORS 미들웨어가 먼저 작동하도록 설정
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -56,7 +57,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = 'project.urls'
@@ -137,5 +137,10 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'users.User'
 
-CORS_ORIGIN_WHITELIST = ('http://127.0.0.1:3000', 'http://localhost:3000')
-CORS_ALLOW_CREDENTIALS = True
+# CORS settings
+CORS_ALLOW_ALL_ORIGINS = False  # 모든 도메인을 허용하지 않도록 설정
+CORS_ORIGIN_WHITELIST = ('http://127.0.0.1:3000', 'http://localhost:3000')  # 허용할 프론트엔드 도메인 추가
+CORS_ALLOW_CREDENTIALS = True  # 쿠키와 인증 정보를 포함한 요청을 허용
+
+# CSRF trusted origins
+CSRF_TRUSTED_ORIGINS = ['http://127.0.0.1:3000', 'http://localhost:3000']  # CSRF 검증을 신뢰하는 도메인 추가
