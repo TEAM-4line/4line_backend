@@ -30,12 +30,12 @@ class MainUserSerializer(serializers.ModelSerializer):
             return '기타'
         # trip_type에 따른 type_content 설정
         trip_type_content_mapping = {
-            'lion': '용맹한 모험가,',
-            'owl': '섬세한 계획자,',
-            'monkey': '즉흥적인 자유인,',
-            'cat': '편안한 휴식가,',
-            'dolphin': '사교적인 리더,',
-            'fox': '호기심 많은 탐험가,'
+            'lion': '용맹한 모험가 사자,',
+            'owl': '섬세한 계획자 부엉이,',
+            'monkey': '즉흥적인 자유인 원숭이,',
+            'cat': '편안한 휴식가 고양이,',
+            'dolphin': '사교적인 리더 돌고래,',
+            'fox': '호기심 많은 탐험가 여우,'
         }
         trip_type = self.get_trip_type(obj)
         return trip_type_content_mapping.get(trip_type, '기타')
