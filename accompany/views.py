@@ -16,6 +16,7 @@ from .serializers import AccompanySerializer
 from django.shortcuts import get_object_or_404
 
 class AccompanyViewSet(viewsets.ModelViewSet):
+    permission_classes = [IsAuthenticated]
     def get_queryset(self):
         trip_type = self.kwargs.get("trip_type")
         if trip_type:
@@ -35,11 +36,14 @@ class AccompanyViewSet(viewsets.ModelViewSet):
     def create(self, request):
     # 현재 로그인한 유저 정보에서 trip_type 가져오기
         user = request.user
+        if not user.is_authenticated:
+            return Response({"error": "User not authenticated"}, status=status.HTTP_401_UNAUTHORIZED)
         trip_type = user.trip_type  # 유저의 trip_type 가져오기
 
     # 요청 데이터를 복사하여 trip_type 추가
         data = request.data.copy()
         data['trip_type'] = trip_type
+        data['user'] = user.id
 
     # Serializer에 수정된 데이터를 전달
         serializer = self.get_serializer(data=data)

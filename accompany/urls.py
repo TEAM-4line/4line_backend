@@ -7,17 +7,17 @@ from django.conf.urls.static import static
 app_name = "accompany"
 
 # Main router for AccompanyViewSet
-default_router = routers.SimpleRouter(trailing_slash=False)
+default_router = routers.SimpleRouter(trailing_slash=True)
 default_router.register("", AccompanyViewSet, basename="accompanies")
 
 urlpatterns = [
     # Base AccompanyViewSet URLs
     path("", include(default_router.urls)),
 
-    # Accompany filtering by trip_type
+    # Accompany filtering by trip_type with trailing slash
     path("<str:trip_type>/", AccompanyViewSet.as_view({'get': 'list'}), name="accompany_by_type"),
 
-    # Nested comments for a specific Accompany
+    # Nested comments for a specific Accompany with trailing slash
     path(
         "<int:accompany_id>/comments/",
         AccompanyCommentViewSet.as_view({'get': 'list', 'post': 'create'}),
