@@ -14,7 +14,7 @@ urlpatterns = [
     # 여행 타입별 게시물 조회
     #path("<str:trip_type>/", AccompanyViewSet.as_view({'get': 'list'}), name="accompany_by_type"),
     path("<str:trip_type>/", AccompanyByTypeView.as_view(), name="accompany_by_type"),
-
+    path("<int:id>/", AccompanyViewSet.as_view({'get': 'list'}), name="accompany_by_id"),
     # Base AccompanyViewSet URLs
     path("", include(default_router.urls)),
 

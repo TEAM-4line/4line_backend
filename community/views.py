@@ -8,7 +8,8 @@ from rest_framework.permissions import IsAuthenticated
 class CommunityViewSet(viewsets.ModelViewSet):
     queryset = Community.objects.all()
     serializer_class = CommunitySerializer
-    #permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
+    
     def perform_create(self, serializer):
         serializer.save(writer=self.request.user)
 
