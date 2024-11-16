@@ -1,14 +1,37 @@
 from rest_framework.decorators import action
 from rest_framework.response import Response
-from rest_framework import viewsets, status
+from rest_framework import viewsets, status, filters
 from .models import Community
 from .serializers import CommunitySerializer
 from rest_framework.permissions import IsAuthenticated
+from django_filters.rest_framework import DjangoFilterBackend, FilterSet, CharFilter
 
+# 여행 기간 필터 정의
+class CommunityFilter(FilterSet):
+    trip_time = CharFilter(method='filter_trip_time', label='Trip Time')
+
+    class Meta:
+        model = Community
+        fields = ['trip_time']
+
+    # 여행 기간을 '일', '주', '개월'로 필터링
+    def filter_trip_time(self, queryset, name, value):
+        if value.endswith("일"):
+            return queryset.filter(trip_time__contains="일")
+        elif value.endswith("주"):
+            return queryset.filter(trip_time__contains="주")
+        elif value.endswith("개월"):
+            return queryset.filter(trip_time__contains="개월")
+        return queryset.none()
+    
 class CommunityViewSet(viewsets.ModelViewSet):
     queryset = Community.objects.all()
     serializer_class = CommunitySerializer
     permission_classes = [IsAuthenticated]
+    filter_backends = [DjangoFilterBackend, filters.OrderingFilter]
+    filterset_class = CommunityFilter
+    ordering_fields = ['created_at', 'updated_at']
+
 
     def perform_create(self, serializer):
         serializer.save(writer=self.request.user)
