@@ -24,6 +24,6 @@
 
 | 아이콘 | 이름      | 개발분야      | 개인레포           | 역할          |
 | ---  | ------- | ----------- | ---------        | ----         |
-| ✨ | 김진우   | BACK-END  |             |             |
-| 🐛 | 박선우   | BACK-END  |              |              |
-| 🐿 | 서문지   | BACK-END  |[SEOMUNJI](https://github.com/SEOMUNJI)|회원가입, 로그인, 마이페이지 구현           |
+| ✨ | 김진우   | BACK-END  |             | 여행정보게시판, 메인페이지 개발        |
+| 🐛 | 박선우   | BACK-END  |              | 여행동행게시판 개발            |
+| 🐿 | 서문지   | BACK-END  |[SEOMUNJI](https://github.com/SEOMUNJI)|회원가입, 로그인, 마이페이지 개발          |
