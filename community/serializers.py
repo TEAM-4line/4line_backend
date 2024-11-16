@@ -22,11 +22,15 @@ class CommunitySerializer(serializers.ModelSerializer):
         # return obj.writer.profile_image.url if obj.writer.profile_image else None
         # User 모델 확장 방식에 따라 다르게 처리
         if hasattr(obj.writer, 'profile_image') and obj.writer.profile_image:
-        # profile_image가 문자열인지 확인하고 URL 반환
             if isinstance(obj.writer.profile_image, str):
                 return obj.writer.profile_image
             return obj.writer.profile_image.url
         return None
+
+    # def get_profile_image(self, obj):
+    #     if hasattr(obj.writer, 'profile_image') and obj.writer.profile_image:
+    #         return obj.writer.profile_image.url
+    #     return None
 
     def create(self, validated_data):
         # `likes`와 `scraps` 필드를 제거하고 나머지 데이터로 인스턴스 생성

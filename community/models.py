@@ -6,7 +6,12 @@ from django.conf import settings
 class Community(models.Model):
     id = models.AutoField(primary_key=True)
     title = models.CharField(max_length=50)
-    trip_time = models.CharField(max_length=50,null=True)
+    trip_time = models.PositiveIntegerField(null=True, blank=True)
+    trip_timeUnit = models.CharField(
+        max_length=10,
+        choices=[('일', '일'), ('주', '주'), ('개월', '개월')],
+        default='일'
+    )
     cost = models.CharField(max_length=50,null=True)
     region = models.CharField(max_length=50)
     rating = models.FloatField()

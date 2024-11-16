@@ -9,10 +9,11 @@ from django_filters.rest_framework import DjangoFilterBackend, FilterSet, CharFi
 # 여행 기간 필터 정의
 class CommunityFilter(FilterSet):
     trip_time = CharFilter(method='filter_trip_time', label='Trip Time')
+    trip_timeUnit = CharFilter(field_name='trip_timeUnit', lookup_expr='exact', label='Trip Time Unit')
 
     class Meta:
         model = Community
-        fields = ['trip_time']
+        fields = ['trip_time', 'trip_timeUnit']
 
     # 여행 기간을 '일', '주', '개월'로 필터링
     def filter_trip_time(self, queryset, name, value):
