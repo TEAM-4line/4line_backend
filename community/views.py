@@ -4,11 +4,12 @@ from rest_framework import viewsets, status, filters
 from .models import Community
 from .serializers import CommunitySerializer
 from rest_framework.permissions import IsAuthenticated
-from django_filters.rest_framework import DjangoFilterBackend, FilterSet, CharFilter
+from django_filters.rest_framework import DjangoFilterBackend, FilterSet, CharFilter, NumberFilter
 
 # 여행 기간 필터 정의
 class CommunityFilter(FilterSet):
-    trip_time = CharFilter(method='filter_trip_time', label='Trip Time')
+    #trip_time = CharFilter(method='filter_trip_time', label='Trip Time')
+    trip_time = NumberFilter(field_name='trip_time', lookup_expr='exact', label='Trip Time')
     trip_timeUnit = CharFilter(field_name='trip_timeUnit', lookup_expr='exact', label='Trip Time Unit')
 
     class Meta:
