@@ -24,6 +24,9 @@ class Community(models.Model):
 
     def scrap_count(self):
         return self.scraps.count()
+    
+    def profile_image(self):
+        return self.writer.profile_image.url if self.writer.profile_image else None
 
     def __str__(self):
         return self.title
