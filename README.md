@@ -10,10 +10,7 @@
 ## 🛠️ 기술 스택
 
 <div>
-  <img src="https://img.shields.io/badge/html5-E34F26?style=flat-square&logo=html5&logoColor=white">&nbsp;
-  <img src="https://img.shields.io/badge/javascript-F7DF1E?style=flat-square&logo=javascript&logoColor=black">&nbsp;
-  <img src="https://img.shields.io/badge/TypeScript-007ACC?style=flat-square&logo=typescript&logoColor=white">&nbsp;
-  <img src="https://img.shields.io/badge/react-61DAFB?style=flat-square&logo=react&logoColor=black">&nbsp;
+
 </div>
 
 ## 📙 프로젝트 소개
@@ -32,8 +29,8 @@
 
 ## 💡 백엔드 팀원 소개
 
-| 아이콘 | 이름      | 개발분야      | 개인레포           | 역할          |
-| ---  | ------- | ----------- | ---------        | ----         |
-| ✨ | 김진우   | BACK-END  |             | 여행정보게시판, 메인페이지 개발        |
-| 🐛 | 박선우   | BACK-END  |              | 여행동행게시판 개발            |
-| 🐿 | 서문지   | BACK-END  |[SEOMUNJI](https://github.com/SEOMUNJI)|회원가입, 로그인, 마이페이지 개발          |
+| 이름      | 개발분야      | 개인레포           | 역할          |
+| ------- | ----------- | ---------        | ----         |
+| 김진우   | BACK-END  |             | 여행정보게시판, 메인페이지 개발        |
+| 박선우   | BACK-END  |              | 여행동행게시판 개발            |
+| 서문지   | BACK-END  |[SEOMUNJI](https://github.com/SEOMUNJI)|회원가입, 로그인, 마이페이지 개발          |
